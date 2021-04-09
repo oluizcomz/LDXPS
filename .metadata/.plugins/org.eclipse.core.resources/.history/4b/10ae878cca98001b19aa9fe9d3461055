@@ -1,0 +1,41 @@
+package DataBase;
+
+import DataBase.Connect;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import Utils.*;
+
+public class InsertBD {
+	
+	private Connection c = null;
+	public InsertBD() {
+        this.c = Connect.getConnection();
+    }
+
+	public boolean insert(Vendedor vendedor) {
+
+		String sql = "INSERT INTO VENDEDORES (CDVEND, DSNOME, CDTAB, DTNASC) VALUES (?,?,?,?)";
+		PreparedStatement s;
+
+		try {
+			s = c.prepareStatement(sql);
+			s.setString(1, vendedor.getCDVEND());
+			s.setString(2, vendedor.getDSNOME());
+			s.setInt(3, vendedor.getCDTAB());
+			s.setString(4, vendedor.getDate());
+			s.executeUpdate();
+			return true;
+		} catch (SQLException ex) {
+			System.err.println("Error: " + ex);
+			return false;
+		} finally {
+			Connect.closeConnection(c, s);
+		}
+
+	}
+
+}

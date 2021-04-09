@@ -1,0 +1,91 @@
+package DataBase;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.UUID;
+
+import Only.Vendedor;
+
+public class VendedoresBD {
+
+	public VendedoresBD() {
+		if (Connect.Status() == false)
+			Connect.StartConnect();
+	}
+
+	public ArrayList<Vendedor> List() {
+		ArrayList<Vendedor> listvendedor = new ArrayList<Vendedor>();
+		String query = "SELECT * FROM VENDEDORES ORDER BY DSNOME;";
+		try {
+			Connect.resultset = Connect.statement.executeQuery(query);
+			ResultSet result = Connect.resultset;
+			while (result.next()) {
+				listvendedor.add(new Vendedor(result.getString("CDVEND"), result.getString("DSNOME"),
+						result.getInt("CDTAB"), result.getString("DTNASC")));
+
+			}
+			return listvendedor;
+
+		} catch (SQLException e) {
+			throw new RuntimeException("Error list all");
+		}
+	}
+
+	public void Insert(String DSNOME, int CDTAB, String DTNASC) {
+		String CDVEND = UUID.randomUUID().toString();
+		SimpleDateFormat formatout = new SimpleDateFormat("yyyy/MM/dd");
+		String query = "INSERT INTO VENDEDORES (CDVEND,DSNOME,CDTAB,DTNASC) VALUES ('" + CDVEND + "','" + DSNOME + "','"
+				+ CDTAB + "','" + formatout.format(DTNASC) + "');";
+		try {
+			Connect.statement.executeUpdate(query);
+			// System.out.println(query);
+		} catch (SQLException e) {
+			throw new RuntimeException("Error insert vendedor");
+		}
+	}
+
+	public void edit(String CDVEND, String DSNOME, int CDTAB, Date DTNASC) {
+		
+		SimpleDateFormat formatout = new SimpleDateFormat("yyyy/MM/dd");
+		String query = "UPDATE VENDEDORES SET DSNOME = '" + DSNOME + "', CDTAB = '" + CDTAB + "', DTNASC = '" + formatout.format(DTNASC)
+				+ "' WHERE CDVEND = '" + CDVEND + "';";
+		try {
+			Connect.statement.executeUpdate(query);
+			// System.out.println(query);
+		} catch (SQLException e) {
+			throw new RuntimeException("Error insert vendedor");
+		}
+
+	}
+
+	public void delete(String CDVEND) {
+		String query = "DELETE FROM VENDEDORES WHERE CDVEND = '" + CDVEND + "';";
+		try {
+			Connect.statement.executeUpdate(query);
+			// System.out.println(query);
+		} catch (SQLException e) {
+			throw new RuntimeException("Error insert vendedor");
+		}
+
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		VendedoresBD ven = new VendedoresBD();
+		ArrayList<Vendedor> lista;
+		// ven.Insert("cod2", "Marcio Ferreira", 321, "1997/11/30");
+		// ven.edit("cod2", "Marcio marques ", 321, "1997/11/30");
+		// ven.delete("cod2");
+		lista = ven.List();
+		System.out.println("CDVEND: " + lista.get(1).getCDVEND() + " DSNOME: " + lista.get(1).getDSNOME() + " CDTAB: "
+				+ lista.get(1).getCDTAB() + " DTNASC: " + lista.get(1).getDTNASC());
+
+		Connect.Disconect();
+
+		System.out.println("aleluia4");
+	}
+
+}

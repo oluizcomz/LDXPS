@@ -1,0 +1,20 @@
+package DataBase;
+
+public class Connection {
+
+	private static final String DRIVER = "com.mysql.jdbc.Driver";
+	private static final String URL = "jdbc:mysql://localhost:3306/ldxps";
+	private static final String USER = "root";
+	private static final String PASS = "Netinhol";
+
+	public static Connect getConnection() {
+
+		try {
+			Class.forName(DRIVER);
+
+			return DriverManager.getConnection(URL, USER, PASS);
+		} catch (ClassNotFoundException | SQLException ex) {
+			throw new RuntimeException("Erro na conexão", ex);
+		}
+	}
+}

@@ -1,0 +1,3 @@
+module LDXPS {
+	requires java.desktop;
+}

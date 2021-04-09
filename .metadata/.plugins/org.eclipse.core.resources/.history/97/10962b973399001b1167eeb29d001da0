@@ -1,0 +1,39 @@
+package DataBase;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Connect {
+
+	public static Connection connection = null;
+	public static Statement statement = null;
+	public static ResultSet resultset = null;
+
+	public static void StartConnect() {
+		final String DRIVER = "com.mysql.jdbc.Driver";
+		final String URL = "jdbc:mysql://localhost:3306/ldxps";
+		final String USER = "root";
+		final String PASS = "Netinhol";
+
+		try {
+			Class.forName(DRIVER);
+			this.connection = DriverManager.getConnection(URL, USER, PASS);
+			this.statement = this.connection.createStatement();
+		} catch (Exception e) {
+			throw new RuntimeException("Erro na conexão com o banco de dados");
+		}
+	}
+	public static void Disconect() {
+		try {
+			this.connection.close();
+		} catch (SQLException e){
+			throw new RuntimeException("Erro ao desconectar");
+		}
+		
+	}
+    
+}

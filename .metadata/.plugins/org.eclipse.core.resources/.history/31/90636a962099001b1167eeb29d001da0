@@ -1,0 +1,45 @@
+package DataBase;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Vendedores {
+	private Connection connection = null;
+	private Statement statement = null;
+
+	public void Connect() {
+		 final String DRIVER = "com.mysql.jdbc.Driver";
+		 final String URL = "jdbc:mysql://localhost:3306/ldxps";
+		 final String USER = "root";
+		 final String PASS = "Netinhol";
+
+		try {
+			Class.forName(DRIVER);
+			this.connection = DriverManager.getConnection(URL, USER, PASS);
+			this.statement = this.connection.createStatement();
+		} catch (Exception e ) {
+			throw new RuntimeException("Erro na conexão com o banco de dados");
+		}
+	}
+	
+	public Boolean estado() {
+		if(this.connection!=null){
+			return true;
+		}
+		return false;
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Vendedores ven = new Vendedores();
+		ven.Connect();
+		if (ven.estado() ==false)
+			System.out.println("mas uma vez errado");
+		else
+			System.out.println("aleluia");
+
+	}
+
+}

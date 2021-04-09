@@ -1,0 +1,72 @@
+package DataBase;
+
+import java.sql.SQLException;
+
+public class Vendedores {
+	
+	Vendedores(){
+		if (Connect.Status() == false)
+			Connect.StartConnect();
+	}
+
+	public void listar() {
+		String query = "SELECT * FROM VENDEDORES ORDER BY DSNOME;";
+		try {
+			Connect.resultset = Connect.statement.executeQuery(query);
+			while (Connect.resultset.next())
+				System.out.println("CDVEND: " + Connect.resultset.getString("CDVEND") + " DSNOME: "
+						+ Connect.resultset.getString("DSNOME") + " CDTAB: " + Connect.resultset.getInt("CDTAB") + " DTNASC: "
+						+ Connect.resultset.getDate("DTNASC"));
+		} catch (SQLException e) {
+			throw new RuntimeException("Error list all");
+		}
+	}
+
+	public void Insert(String CDVEND, String DSNOME, int CDTAB, String DTNASC) {
+		String query = "INSERT INTO VENDEDORES (CDVEND,DSNOME,CDTAB,DTNASC) VALUES ('" + CDVEND + "','" + DSNOME + "','"
+				+ CDTAB + "','" + DTNASC + "');";
+		try {
+			Connect.statement.executeUpdate(query);
+			// System.out.println(query);
+		} catch (SQLException e) {
+			throw new RuntimeException("Error insert vendedor");
+		}
+	}
+
+	public void edit(String CDVEND, String DSNOME, int CDTAB, String DTNASC) {
+		String query = "UPDATE VENDEDORES SET DSNOME = '" + DSNOME + "', CDTAB = '" + CDTAB + "', DTNASC = '" + DTNASC
+				+ "' WHERE CDVEND = '" + CDVEND + "';";
+		try {
+			Connect.statement.executeUpdate(query);
+			// System.out.println(query);
+		} catch (SQLException e) {
+			throw new RuntimeException("Error insert vendedor");
+		}
+
+	}
+
+	public void delete(String CDVEND) {
+		String query = "DELETE FROM VENDEDORES WHERE CDVEND = '" + CDVEND + "';";
+		try {
+			Connect.statement.executeUpdate(query);
+			// System.out.println(query);
+		} catch (SQLException e) {
+			throw new RuntimeException("Error insert vendedor");
+		}
+
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Vendedores ven = new Vendedores();
+			// ven.Insert("cod2", "Marcio Ferreira", 321, "1997/11/30");
+			// ven.edit("cod2", "Marcio marques ", 321, "1997/11/30");
+			// ven.delete("cod2");
+			ven.listar();
+			Connect.Disconect();
+
+			System.out.println("aleluia");
+		}
+	
+
+}

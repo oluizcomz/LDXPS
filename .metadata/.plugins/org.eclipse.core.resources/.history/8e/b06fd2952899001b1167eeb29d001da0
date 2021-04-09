@@ -1,0 +1,71 @@
+package DataBase;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+
+public class Vendedores {
+	private Connection connection = null;
+	private Statement statement = null;
+	private ResultSet resultset = null;
+
+	public void Connect() {
+		final String DRIVER = "com.mysql.jdbc.Driver";
+		final String URL = "jdbc:mysql://localhost:3306/ldxps";
+		final String USER = "root";
+		final String PASS = "Netinhol";
+
+		try {
+			Class.forName(DRIVER);
+			this.connection = DriverManager.getConnection(URL, USER, PASS);
+			this.statement = this.connection.createStatement();
+		} catch (Exception e) {
+			throw new RuntimeException("Erro na conexão com o banco de dados");
+		}
+	}
+
+	public Boolean estado() {
+		if (this.connection != null) {
+			return true;
+		}
+		return false;
+	}
+
+	public void listar() {
+		String query = "SELECT * FROM VENDEDORES ORDER BY DSNOME";
+		try {
+			this.resultset = this.statement.executeQuery(query);
+			while (this.resultset.next())
+				System.out.println("CDVEND: " + this.resultset.getString("CDVEND")
+				+ " DSNOME: "+ this.resultset.getString("DSNOME") 
+				+ " CDTAB: " + this.resultset.getInt("CDTAB")
+				+ " DTNASC: " + this.resultset.getDate("DTNASC"));
+		} catch (SQLException e) {
+			throw new RuntimeException("Error list all");
+		}
+	}
+	public void Insert(String CDVEND,String DSNOME,int CDTAB, String DTNASC) {
+		String query ="INSERT INTO VENDEDORES(CDVEND,DSNOME,CDTAB,DTNASC) VALUES ("+CDTAB+","+DSNOME+","+CDVEND+","+DTNASC;
+		try {
+			this.statement.executeUpdate(query);
+		} catch (SQLException e) {
+			throw new RuntimeException("Error insert vendedor");
+		}
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Vendedores ven = new Vendedores();
+		ven.Connect();
+		if (ven.estado() == false)
+			System.out.println("mas uma vez errado");
+		else {
+			ven.Insert("cod2", "Marcio Ferreira", 321, "1997/11/30");
+			ven.listar();
+			System.out.println("aleluia");
+		}
+	}
+
+}
