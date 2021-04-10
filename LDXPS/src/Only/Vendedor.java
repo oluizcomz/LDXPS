@@ -1,22 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Only;
 
-/**
- *
- * @author luizn
- */
+import java.util.Date;
+
 public class Vendedor {
 
 	private String CDVEND;
 	private String DSNOME;
 	private int CDTAB;
-	private String DTNASC;
+	private Date DTNASC;
 
-	public Vendedor(String CDVEND, String DSNOME, int CDTAB, String DTNASC) {
+	public Vendedor(String CDVEND, String DSNOME, int CDTAB, Date DTNASC) {
 		this.CDVEND = CDVEND;
 		this.DSNOME = DSNOME;
 		this.CDTAB = CDTAB;
@@ -24,11 +18,11 @@ public class Vendedor {
 
 	}
 
-	public String getDTNASC() {
+	public Date getDTNASC() {
 		return DTNASC;
 	}
 
-	public void setDTNASC(String DTNASC) {
+	public void setDTNASC(Date DTNASC) {
 		this.DTNASC = DTNASC;
 	}
 

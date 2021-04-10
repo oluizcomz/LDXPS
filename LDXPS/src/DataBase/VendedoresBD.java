@@ -27,7 +27,7 @@ public class VendedoresBD {
 			ResultSet result = Connect.resultset;
 			while (result.next()) {
 				listvendedor.add(new Vendedor(result.getString("CDVEND"), result.getString("DSNOME"),
-						result.getInt("CDTAB"), result.getString("DTNASC")));
+						result.getInt("CDTAB"), result.getDate("DTNASC")));
 
 			}
 			return listvendedor;
@@ -73,21 +73,7 @@ public class VendedoresBD {
 	}
 
 	public static void main(String[] args) throws ParseException {
-		// TODO Auto-generated method stub
-		VendedoresBD ven = new VendedoresBD();
-		ArrayList<Vendedor> lista;
-		SimpleDateFormat formatin = new SimpleDateFormat("dd/MM/yyyy");
-			Date data = formatin.parse("01/02/1998");
-		// ven.Insert("Marcio Ferreira", 321, data);
-		 //ven.edit("60eede93-a8cb-4acb-86dd-683b11d32980", "Marcio marques ", 321,data);
-		// ven.delete("cod2");
-		lista = ven.List();
-		System.out.println("CDVEND: " + lista.get(1).getCDVEND() + " DSNOME: " + lista.get(1).getDSNOME() + " CDTAB: "
-				+ lista.get(1).getCDTAB() + " DTNASC: " + lista.get(1).getDTNASC()+"tamanho "+lista.size());
 
-		Connect.Disconect();
-
-		System.out.println("aleluia4");
 	}
 
 }

@@ -1,3 +1,11 @@
+/* File:          Connect.java
+Date: 09/00]4/21
+Description: CLASSSE RESPONSAVEL POR CONECTAR AO SERCIDOR
+References:
+Author:Luiz da Silva Moura.
+Modifications:
+*/
+
 package DataBase;
 
 import java.sql.Connection;
@@ -16,7 +24,7 @@ public class Connect {
 		final String DRIVER = "com.mysql.jdbc.Driver";
 		final String URL = "jdbc:mysql://localhost:3306/ldxps";
 		final String USER = "root";
-		final String PASS = "senha";
+		final String PASS = "Senha";
 
 		try {
 			Class.forName(DRIVER);
@@ -28,11 +36,12 @@ public class Connect {
 	}
 
 	public static void Disconect() {
-		try {
+		/*try {
 			connection.close();
 		} catch (SQLException e) {
 			throw new RuntimeException("Erro ao desconectar");
 		}
+		*/
 
 	}
 
